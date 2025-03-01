@@ -20,8 +20,14 @@ const AppContextProvider = ({ children }) => {
   const clearCart = () => {
     dispatch({ type: CLEAN_CART });
   };
+  const remove = (id) => {
+    dispatch({ type: REMOVE, payload: { id } });
+  };
+  const increase = (id) => {
+    dispatch({ type: INCREASE, payload: { id } });
+  };
   return (
-    <AppContext.Provider value={{ ...state, clearCart }}>
+    <AppContext.Provider value={{ ...state, clearCart, remove, increase }}>
       {children}
     </AppContext.Provider>
   );

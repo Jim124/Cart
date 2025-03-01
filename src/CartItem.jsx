@@ -1,7 +1,7 @@
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
 import { useCartContext } from './context/CartContext';
 const CartItem = ({ id, img, title, price, amount }) => {
-  const { loading } = useCartContext();
+  const { remove, increase } = useCartContext();
   return (
     <article className='cart-item'>
       <img src={img} alt={title} />
@@ -9,13 +9,13 @@ const CartItem = ({ id, img, title, price, amount }) => {
         <h5>{title}</h5>
         <span className='item-price'>${price}</span>
         {/* remove button */}
-        <button className='remove-btn' onClick={() => console.log('remove')}>
+        <button className='remove-btn' onClick={() => remove(id)}>
           remove
         </button>
       </div>
       <div>
         {/* increase amount */}
-        <button className='amount-btn' onClick={() => console.log('increase')}>
+        <button className='amount-btn' onClick={() => increase(id)}>
           <FaChevronUp className='amount-icon' />
         </button>
         {/* amount */}
