@@ -8,6 +8,12 @@ import {
 } from './actions';
 const reducer = (state, action) => {
   switch (action.type) {
+    case LOADING:
+      return { ...state, loading: true };
+    case DISPLAY_ITEM:
+      const data = action.payload.data;
+      const loadCart = new Map(data.map((item) => [item.id, item]));
+      return { ...state, loading: false, cart: loadCart };
     case CLEAN_CART:
       return { ...state, cart: new Map() };
     case REMOVE:
@@ -21,6 +27,21 @@ const reducer = (state, action) => {
       const newItem = { ...cartItem, amount: cartItem.amount + 1 };
       cart.set(itemId, newItem);
       return { ...state, cart: cart };
+    case DECREASE:
+      const decreaseCart = new Map(state.cart);
+      const id = action.payload.id;
+      const item = decreaseCart.get(id);
+      if (item.amount == 1) {
+        decreaseCart.delete(id);
+        return { ...state, cart: decreaseCart };
+      }
+      const updateItem = {
+        ...item,
+        amount: item.amount - 1,
+      };
+      decreaseCart.set(id, updateItem);
+      return { ...state, cart: decreaseCart };
+
     default:
       throw new Error(`not matching action type: ${action.type}`);
   }
